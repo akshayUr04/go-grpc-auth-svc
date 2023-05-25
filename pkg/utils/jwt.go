@@ -18,6 +18,7 @@ type jwtClaims struct {
 	jwt.StandardClaims
 	Id    int64
 	Email string
+	Role  string
 }
 
 // Generating token for user
@@ -25,6 +26,7 @@ func (w *JwtWrapper) GenerateToken(user models.User) (string, error) {
 	claims := &jwtClaims{
 		Id:    user.Id,
 		Email: user.Email,
+		Role:  "user",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(),
 			Issuer:    w.Issuer,
@@ -45,6 +47,7 @@ func (w *JwtWrapper) GenerateAdminToken(admin models.Admin) (string, error) {
 	claims := &jwtClaims{
 		Id:    admin.Id,
 		Email: admin.Email,
+		Role:  "admin",
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(w.ExpirationHours)).Unix(),
 			Issuer:    w.Issuer,

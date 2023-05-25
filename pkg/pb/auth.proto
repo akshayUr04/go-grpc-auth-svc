@@ -64,5 +64,6 @@ message ValidateRequest { string token = 1; }
 message ValidateResponse {
   int64 status = 1;
   string error = 2;
-  int64 userId = 3;
+  int64 Id = 3;
+  string role = 4;
 }

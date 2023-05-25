@@ -120,6 +120,7 @@ func (s *Server) AdminLogin(ctx context.Context, req *pb.AdminLoginRequest) (*pb
 		Token:  token,
 	}, nil
 }
+
 func (s *Server) Validate(ctx context.Context, req *pb.ValidateRequest) (*pb.ValidateResponse, error) {
 	fmt.Println("---Validate---")
 	claims, err := s.Jwt.ValidateToken(req.Token)
@@ -130,18 +131,10 @@ func (s *Server) Validate(ctx context.Context, req *pb.ValidateRequest) (*pb.Val
 		}, err
 	}
 
-	var user models.User
-
-	if result := s.H.DB.Where(&models.User{Email: claims.Email}).First(&user); result.Error != nil {
-		return &pb.ValidateResponse{
-			Status: http.StatusNotFound,
-			Error:  "User not found",
-		}, nil
-	}
-
 	return &pb.ValidateResponse{
 		Status: http.StatusOK,
-		UserId: user.Id,
+		Id:     claims.Id,
+		Role:   claims.Role,
 	}, nil
 
 }
