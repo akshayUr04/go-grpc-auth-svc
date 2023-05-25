@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	fmt.Println("---main---")
 	c, err := config.LoadConfig()
 	if err != nil {
 		log.Fatal("Failed at config", err)

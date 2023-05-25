@@ -20,6 +20,7 @@ func Init(url string) Handler {
 	}
 
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Admin{})
 
 	return Handler{db}
 }
